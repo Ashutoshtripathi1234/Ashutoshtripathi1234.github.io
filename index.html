@@ -1,41 +1,704 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Ashutosh Tripathi</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ashutosh Tripathi</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg: #faf9f7;
+      --text: #1a1a1a;
+      --muted: #666;
+      --accent: #b5451b;
+      --border: #e0ddd8;
+      --card: #ffffff;
+      --hover-bg: #f5f3ef;
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+ 
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+ 
+    /* ── Layout ── */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 28px 80px;
+    }
+ 
+    /* ── Hero ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 40px;
+      align-items: start;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+ 
+    .hero-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 500;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+ 
+    .hero-bio {
+      color: #333;
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+ 
+    .hero-bio strong { color: var(--text); font-weight: 500; }
+ 
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 4px;
+      font-size: 14px;
+    }
+ 
+    .hero-links a {
+      display: inline-block;
+      padding: 4px 12px;
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      color: var(--accent);
+      font-weight: 400;
+      transition: background 0.15s, color 0.15s;
+    }
+ 
+    .hero-links a:hover {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+    }
+ 
+    .hero-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 4px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      filter: grayscale(8%);
+      justify-self: end;
+    }
+ 
+    /* ── Section ── */
+    section { margin-bottom: 52px; }
+ 
+    .section-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+ 
+    /* ── Updates ── */
+    .updates-list { list-style: none; }
+ 
+    .updates-list li {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      align-items: baseline;
+    }
+ 
+    .updates-list li:last-child { border-bottom: none; }
+ 
+    .update-date {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+    }
+ 
+    .update-tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 2px;
+      font-weight: 500;
+      vertical-align: middle;
+      margin-right: 6px;
+      letter-spacing: 0.3px;
+    }
+ 
+    /* ── Publications ── */
+    .pub-list { list-style: none; }
+ 
+    .pub-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+      transition: background 0.15s;
+    }
+ 
+    .pub-item:last-child { border-bottom: none; }
+ 
+    .pub-thumb {
+      width: 160px;
+      height: 105px;
+      background: linear-gradient(135deg, #f0ede8 0%, #e8e4de 100%);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+ 
+    .pub-thumb-inner {
+      width: 80%;
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      justify-content: center;
+      padding: 10px;
+    }
+ 
+    .pub-thumb-line {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+    }
+ 
+    .pub-thumb-line.accent { background: var(--accent); opacity: 0.5; }
+    .pub-thumb-line.short { width: 60%; }
+    .pub-thumb-line.shorter { width: 40%; }
+ 
+    .pub-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+ 
+    .pub-title a { color: var(--text); }
+    .pub-title a:hover { color: var(--accent); text-decoration: none; }
+ 
+    .pub-authors {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      line-height: 1.5;
+    }
+ 
+    .pub-authors strong { color: var(--text); font-weight: 500; }
+ 
+    .pub-venue {
+      font-size: 13.5px;
+      color: #555;
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+ 
+    .pub-venue .venue-name { font-weight: 500; font-style: normal; color: var(--accent); }
+ 
+    .pub-links { display: flex; gap: 8px; flex-wrap: wrap; }
+ 
+    .pub-links a {
+      font-size: 12.5px;
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+ 
+    .pub-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+    }
+ 
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      padding: 1px 7px;
+      border-radius: 2px;
+      font-weight: 500;
+      margin-left: 6px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+    }
+ 
+    .badge-accepted { background: #edf7ed; color: #2e7d32; border: 1px solid #a5d6a7; }
+    .badge-review { background: #fff8e1; color: #f57f17; border: 1px solid #ffe082; }
+    .badge-if { background: #e8f4fd; color: #0277bd; border: 1px solid #90caf9; }
+ 
+    /* ── Experience ── */
+    .exp-list { list-style: none; }
+ 
+    .exp-item {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 18px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+ 
+    .exp-item:last-child { border-bottom: none; }
+ 
+    .exp-logo {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      background: var(--card);
+      letter-spacing: 0.5px;
+      text-align: center;
+      line-height: 1.2;
+      overflow: hidden;
+    }
+ 
+    .exp-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+ 
+    .exp-role {
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--text);
+    }
+ 
+    .exp-company {
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+ 
+    .exp-duration {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+ 
+    .exp-desc {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.65;
+    }
+ 
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+ 
+    .skill-group {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 16px;
+    }
+ 
+    .skill-group-title {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+ 
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+ 
+    .skill-tag {
+      font-size: 12px;
+      padding: 2px 9px;
+      background: var(--hover-bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: #444;
+    }
+ 
+    /* ── Misc ── */
+    .misc-text {
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #444;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 4px 4px 0;
+    }
+ 
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+ 
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-photo { width: 140px; height: 140px; justify-self: start; order: -1; }
+      .pub-item { grid-template-columns: 1fr; }
+      .pub-thumb { width: 100%; height: 120px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .updates-list li { grid-template-columns: 75px 1fr; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Ashutosh Tripathi</h1>
-        <nav>
-            <a href="about.html">About</a>
-            <a href="projects.html">Publications</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-    </header>
-    <main>
-        <div class="content-wrapper">
-            <div class="text-section">
-                <h2>Welcome to My Personal Website!</h2>
-                <p>I am passionate about research in Federated learning, medical imaging, distributed LLMs, and Reinforcement learning.</p>
-
-                <!-- News Section -->
-                <section>
-                    <h2>News</h2>
-                    <ul>
-                        <li><strong>Sep 11, 2024</strong> - Our paper accepted to IEEE Transactions on Consumer Electronics <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10681112" target="_blank">(paper)</a>.</li>
-                        <li><strong>June 16, 2024</strong> - Our paper accepted to MICCAI 2024 conference <a href="https://arxiv.org/pdf/2407.05800" target="_blank">(paper)</a>.</li>
-                    </ul>
-                </section>
-            </div>
-            
-            <!-- Photo Section -->
-            <div class="photo-section">
-                <img src="WhatsApp.jpg" alt="Ashutosh Tripathi">
-            </div>
+<div class="page">
+ 
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div>
+      <h1 class="hero-name">Ashutosh Tripathi</h1>
+      <p class="hero-bio">
+        I am a <strong>Senior Associate Data Scientist (L1)</strong> at <strong>Publicis Sapient</strong>, Bengaluru, where I build state-of-the-art AI-driven compliance systems. My work spans <strong>agentic workflows</strong>, <strong>LLM-based validation</strong>, and <strong>multi-modal content compliance</strong> on the Bodhi Product.
+        <br/><br/>
+        I graduated with a B.Tech in Electronics Engineering from <strong>Rajiv Gandhi Institute of Petroleum Technology (RGIPT)</strong>, Jais, UP (2021–2025). I have been fortunate to collaborate on research in <strong>Federated Learning</strong> and <strong>Medical Image Classification</strong>, resulting in publications at top venues including <strong>MICCAI 2024</strong>, <strong>IEEE Transactions on Consumer Electronics</strong>, and <strong>TMLR</strong>.
+        <br/><br/>
+        I am always open to research collaborations in Generative AI, Agentic Systems, and Federated Learning.
+      </p>
+      <div class="hero-links">
+        <a href="mailto:ashutoshtripathi191@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/ashu191/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/Ashutoshtripathi1234" target="_blank">GitHub</a>
+        <a href="https://scholar.google.com/citations?user=9ocag4gAAAAJ&hl=en" target="_blank">Google Scholar</a>
+        <a href="tel:+919795563798">Mobile</a>
+      </div>
+    </div>
+    <img
+      class="hero-photo"
+      src="https://drive.google.com/thumbnail?id=1rGN4LUmBS2ggmWfuAuauB1EP_6Z5Cu7_&sz=w400"
+      alt="Ashutosh Tripathi"
+      onerror="this.style.background='#e8e4de';this.style.display='flex';this.src=''"
+    />
+  </div>
+ 
+  <!-- ── UPDATES ── -->
+  <section>
+    <h2 class="section-title">Updates</h2>
+    <ul class="updates-list">
+      <li>
+        <span class="update-date">May 2025</span>
+        <span><span class="update-tag">New</span> Joined <strong>Publicis Sapient</strong> as Senior Associate Data Scientist L1, Bengaluru.</span>
+      </li>
+      <li>
+        <span class="update-date">Feb 2026</span>
+        <span>Submitted paper on <em>Partial Variance Control in Federated Learning</em> to <strong>TMLR</strong> (Under Review).</span>
+      </li>
+      <li>
+        <span class="update-date">Jan 2025</span>
+        <span>Submitted paper on <em>Respiratory Disease Detection with Adaptive Skip Aggregation</em> to <strong>IEEE/ACM TCBB</strong> (Under Review).</span>
+      </li>
+      <li>
+        <span class="update-date">2024</span>
+        <span>Three journal papers accepted: <strong>IEEE TCE (IF: 10.9)</strong>, <strong>TMLR</strong>, and <strong>IEEE Transactions on AI</strong>.</span>
+      </li>
+      <li>
+        <span class="update-date">2024</span>
+        <span>Paper accepted at <strong>MICCAI 2024</strong> (Core Rank A) — <em>FedMRL: Data Heterogeneity Aware Federated Multi-agent Deep Reinforcement Learning for Medical Imaging</em>.</span>
+      </li>
+      <li>
+        <span class="update-date">2025</span>
+        <span>Served as reviewer for <strong>NeurIPS 2025</strong> (Core Rank A*) and <strong>ICONIP 2024</strong> (Core Rank B).</span>
+      </li>
+      <li>
+        <span class="update-date">2023</span>
+        <span>Achieved <strong>All India Rank 4</strong> in the NGIC Ideation Contest organized by HPCL.</span>
+      </li>
+    </ul>
+  </section>
+ 
+  <!-- ── PUBLICATIONS ── -->
+  <section>
+    <h2 class="section-title">Publications</h2>
+    <ul class="pub-list">
+ 
+      <!-- MICCAI 2024 -->
+      <li class="pub-item">
+        <div class="pub-thumb">
+          <div class="pub-thumb-inner">
+            <div class="pub-thumb-line accent"></div>
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line short"></div>
+            <div class="pub-thumb-line accent short"></div>
+            <div class="pub-thumb-line shorter"></div>
+          </div>
         </div>
-    </main>
+        <div>
+          <div class="pub-title">FedMRL: Data Heterogeneity Aware Federated Multi-agent Deep Reinforcement Learning for Medical Imaging</div>
+          <div class="pub-authors">P. Sahoo, <strong>A. Tripathi</strong>, S. Saha, S. Mondal</div>
+          <div class="pub-venue">27th International Conference on Medical Image Computing and Computer-Assisted Intervention &mdash; <span class="venue-name">MICCAI 2024</span> &nbsp;<span class="badge badge-accepted">Core Rank A</span></div>
+          <div class="pub-links">
+            <a href="#">Paper</a>
+            <a href="#">Code</a>
+          </div>
+        </div>
+      </li>
+ 
+      <!-- IEEE TCE -->
+      <li class="pub-item">
+        <div class="pub-thumb">
+          <div class="pub-thumb-inner">
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line accent"></div>
+            <div class="pub-thumb-line short"></div>
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line accent shorter"></div>
+          </div>
+        </div>
+        <div>
+          <div class="pub-title">AdaFedProx: A Heterogeneity-aware Federated Deep Reinforcement Learning for Medical Image Classification</div>
+          <div class="pub-authors">P. Sahoo, <strong>A. Tripathi</strong>, S. Saha, S. Mondal, J. P. Singh, B. Sharma</div>
+          <div class="pub-venue"><span class="venue-name">IEEE Transactions on Consumer Electronics</span> &nbsp;<span class="badge badge-if">IF: 10.9</span> &nbsp;<span class="badge badge-accepted">Accepted</span></div>
+          <div class="pub-links">
+            <a href="#">Paper</a>
+            <a href="#">Code</a>
+          </div>
+        </div>
+      </li>
+ 
+      <!-- TMLR FedDUAL -->
+      <li class="pub-item">
+        <div class="pub-thumb">
+          <div class="pub-thumb-inner">
+            <div class="pub-thumb-line accent"></div>
+            <div class="pub-thumb-line short"></div>
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line accent shorter"></div>
+            <div class="pub-thumb-line short"></div>
+          </div>
+        </div>
+        <div>
+          <div class="pub-title">FedDUAL: A Dual-Strategy with Adaptive Loss and Dynamic Aggregation for Mitigating Data Heterogeneity in Federated Learning</div>
+          <div class="pub-authors">P. Sahoo, <strong>A. Tripathi</strong>, S. Saha, S. Mondal</div>
+          <div class="pub-venue"><span class="venue-name">Transactions on Machine Learning Research (TMLR)</span> &nbsp;<span class="badge badge-accepted">Accepted</span></div>
+          <div class="pub-links">
+            <a href="#">Paper</a>
+            <a href="#">Code</a>
+          </div>
+        </div>
+      </li>
+ 
+      <!-- IEEE TAI -->
+      <li class="pub-item">
+        <div class="pub-thumb">
+          <div class="pub-thumb-inner">
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line accent"></div>
+            <div class="pub-thumb-line shorter"></div>
+            <div class="pub-thumb-line short"></div>
+            <div class="pub-thumb-line accent"></div>
+          </div>
+        </div>
+        <div>
+          <div class="pub-title">Heterogeneity-Aware Federated Learning for Medical Image Classification with Dynamic Parameter Optimization</div>
+          <div class="pub-authors">P. Sahoo, <strong>A. Tripathi</strong>, S. Saha, S. Mondal</div>
+          <div class="pub-venue"><span class="venue-name">IEEE Transactions on Artificial Intelligence</span> &nbsp;<span class="badge badge-accepted">Accepted</span></div>
+          <div class="pub-links">
+            <a href="#">Paper</a>
+            <a href="#">Code</a>
+          </div>
+        </div>
+      </li>
+ 
+      <!-- TMLR Partial Variance -->
+      <li class="pub-item">
+        <div class="pub-thumb">
+          <div class="pub-thumb-inner">
+            <div class="pub-thumb-line short"></div>
+            <div class="pub-thumb-line accent"></div>
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line shorter"></div>
+            <div class="pub-thumb-line accent short"></div>
+          </div>
+        </div>
+        <div>
+          <div class="pub-title">Harnessing Heterogeneity: Improving Convergence Through Partial Variance Control in Federated Learning for Image Classification</div>
+          <div class="pub-authors">P. Sahoo, <strong>A. Tripathi</strong>, S. Saha, S. Mondal</div>
+          <div class="pub-venue"><span class="venue-name">Transactions on Machine Learning Research (TMLR)</span> &nbsp;<span class="badge badge-review">Under Review</span> &nbsp;· Submitted Feb 2026</div>
+          <div class="pub-links">
+            <a href="#">Preprint</a>
+          </div>
+        </div>
+      </li>
+ 
+      <!-- IEEE TCBB -->
+      <li class="pub-item">
+        <div class="pub-thumb">
+          <div class="pub-thumb-inner">
+            <div class="pub-thumb-line accent"></div>
+            <div class="pub-thumb-line shorter"></div>
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line accent short"></div>
+            <div class="pub-thumb-line"></div>
+          </div>
+        </div>
+        <div>
+          <div class="pub-title">Enhancing Respiratory Disease Detection with Adaptive Skip Aggregation in Federated Learning</div>
+          <div class="pub-authors">P. Sahoo, <strong>A. Tripathi</strong>, S. Saha, S. Mondal</div>
+          <div class="pub-venue"><span class="venue-name">IEEE/ACM Transactions on Computational Biology and Bioinformatics</span> &nbsp;<span class="badge badge-review">Under Review</span> &nbsp;· Submitted Jan 2025</div>
+          <div class="pub-links">
+            <a href="#">Paper</a>
+          </div>
+        </div>
+      </li>
+ 
+      <!-- IEEE VCAS -->
+      <li class="pub-item">
+        <div class="pub-thumb">
+          <div class="pub-thumb-inner">
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line accent short"></div>
+            <div class="pub-thumb-line"></div>
+            <div class="pub-thumb-line shorter"></div>
+            <div class="pub-thumb-line accent"></div>
+          </div>
+        </div>
+        <div>
+          <div class="pub-title">IoT-based Face Recognition Robot Implementation for Surveillance Applications</div>
+          <div class="pub-authors">R. S. Iyer, <strong>A. Tripathi</strong>, S. Agarwal</div>
+          <div class="pub-venue"><span class="venue-name">IEEE VCAS 2023</span> &nbsp;<span class="badge badge-accepted">Published</span></div>
+          <div class="pub-links">
+            <a href="#">Paper</a>
+          </div>
+        </div>
+      </li>
+ 
+    </ul>
+  </section>
+ 
+  <!-- ── EXPERIENCE ── -->
+  <section>
+    <h2 class="section-title">Experience</h2>
+    <ul class="exp-list">
+      <li class="exp-item">
+        <div class="exp-logo">
+          <img src="https://logo.clearbit.com/publicissapient.com" alt="Publicis Sapient" onerror="this.parentElement.textContent='PS'"/>
+        </div>
+        <div>
+          <div class="exp-role">Senior Associate Data Scientist L1</div>
+          <div class="exp-company">Publicis Sapient &mdash; Bengaluru, India (Hybrid)</div>
+          <div class="exp-duration">May 2025 – Present</div>
+          <div class="exp-desc">
+            Building state-of-the-art AI compliance systems for the <em>Bodhi Product</em>. Engineered a 6-node LangGraph agentic pipeline for automated compliance rule extraction across PDF, DOCX, and PPTX. Designed a rule-to-validator mapping system supporting 40+ validators across text and image modalities. Implemented self-healing retry with LLM-as-a-judge, parallel processing with ThreadPoolExecutor, Redis caching, and HITL review interfaces. Deployed via FastAPI + Celery on AWS &amp; GCP; exposed core capabilities via MCP server.
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+ 
+  <!-- ── SKILLS ── -->
+  <section>
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Generative AI &amp; Agentic</div>
+        <div class="skill-tags">
+          <span class="skill-tag">LangChain</span>
+          <span class="skill-tag">LangGraph</span>
+          <span class="skill-tag">MCP</span>
+          <span class="skill-tag">RAG</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">HITL</span>
+          <span class="skill-tag">LLM Workflows</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">AI / ML &amp; Deep Learning</div>
+        <div class="skill-tags">
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">HuggingFace</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">OpenCV</span>
+          <span class="skill-tag">LoRA/PEFT</span>
+          <span class="skill-tag">Federated Learning</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud &amp; DevOps</div>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">GCP</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Kubernetes</span>
+          <span class="skill-tag">Celery</span>
+          <span class="skill-tag">Redis</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data &amp; Backend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">LaTeX</span>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ── MISCELLANEOUS ── -->
+  <section>
+    <h2 class="section-title">Miscellaneous</h2>
+    <div class="misc-text">
+      Reviewer at <strong>NeurIPS 2025</strong> (Core Rank A*) and <strong>ICONIP 2024</strong> (Core Rank B) &nbsp;·&nbsp;
+      <strong>All India Rank 4</strong> in the NGIC Ideation Contest organized by HPCL &nbsp;·&nbsp;
+      Qualified <strong>JEE-Advanced</strong> and <strong>JEE-Mains 2021</strong> &nbsp;·&nbsp;
+      B.Tech in Electronics Engineering from <strong>RGIPT</strong> (CGPA: 7.75)
+    </div>
+  </section>
+ 
+  <!-- ── FOOTER ── -->
+  <footer>
+    Design inspired by <a href="https://jonbarron.info" target="_blank">Jon Barron's website</a>. &copy; 2025 Ashutosh Tripathi.
+  </footer>
+ 
+</div>
 </body>
 </html>
+ 
